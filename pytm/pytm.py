@@ -1642,7 +1642,7 @@ is any information relating to an identifiable person.""",
 """
 
     def _shape(self):
-        return "none"
+        return "database"
 
     def dfd(self, **kwargs):
         self._is_drawn = True
