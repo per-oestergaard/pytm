@@ -652,8 +652,8 @@ Can be one of:
 """,
     )
     cvss = varString("", required=False, doc="The CVSS score and/or vector")
-    fixedUniqueID = varString(
-        "", doc="When fixedUniqueID is specified on the element , this will be formatted as findingId:fixedUniqueID. E.g. if finding is INP01 and fixedUniqueID is b123, the value becomes INP01:b123.")
+    fixed_unique_ID = varString(
+        "", doc="When fixed_unique_ID is specified on the element , this will be formatted as findingId:fixed_unique_ID. E.g. if finding is INP01 and fixed_unique_ID is b123, the value becomes INP01:b123.")
 
     def __init__(
         self,
@@ -811,12 +811,12 @@ with same properties, except name and notes""",
                     continue
 
                 finding_count += 1
-                if e.fixedUniqueID != "":
-                    fixedUniqueID="{}:{}".format(t.id,e.fixedUniqueID)
+                if e.fixed_unique_ID != "":
+                    fixed_unique_ID="{}:{}".format(t.id,e.fixed_unique_ID)
                 else:
-                    fixedUniqueID=str(finding_count)
+                    fixed_unique_ID=str(finding_count)
 
-                f = Finding(e, id=str(finding_count), threat=t, fixedUniqueID=fixedUniqueID)
+                f = Finding(e, id=str(finding_count), threat=t, fixed_unique_ID=fixed_unique_ID)
                 logger.debug(f"new finding: {f}")
                 findings.append(f)
                 elements[e].append(f)
@@ -1302,7 +1302,7 @@ a custom response, CVSS score or override other attributes.""",
         doc="Location of the source code that describes this element relative to the directory of the model script.",
     )
     controls = varControls(None)
-    fixedUniqueID = varString("",doc="If present, the element will get this assumably unique, static value and the combination of this ID and the finding ID will make up the unique fixed finding ID. When present, the displayed name be formatted as 'fixedUniqueID:name'. This will give you a stable reference you can use for synchronization with risk management systems etc. It is the responsibility of the person writing the model - the caller - to ensure uniqueness")
+    fixed_unique_ID = varString("",doc="If present, the element will get this assumably unique, static value and the combination of this ID and the finding ID will make up the unique fixed finding ID. When present, the displayed name be formatted as 'fixed_unique_ID:name'. This will give you a stable reference you can use for synchronization with risk management systems etc. It is the responsibility of the person writing the model - the caller - to ensure uniqueness")
     # includeOrder = varBool(
     #     False, doc="If True and Order is set (not -1), the displayed name will be formatted as 'order:name'. If you make Order unique, this will give you a stable reference you can use for synchronization etc.")
 
@@ -1311,8 +1311,8 @@ a custom response, CVSS score or override other attributes.""",
     def __init__(self, name, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
-        if self.fixedUniqueID != "":
-            self.name = "{}:{}".format(self.fixedUniqueID, name)
+        if self.fixed_unique_ID != "":
+            self.name = "{}:{}".format(self.fixed_unique_ID, name)
         else:
             self.name = name
         self.controls = Controls()
@@ -1732,7 +1732,7 @@ class Dataflow(Element):
     def display_name(self):
         if self.order == -1:
             return self.name
-        elif self.fixedUniqueID != "": # fixedUniqueID is already included in name
+        elif self.fixed_unique_ID != "": # fixed_unique_ID is already included in name
             return self.name
         else:
             return "({}) {}".format(self.order, self.name)
