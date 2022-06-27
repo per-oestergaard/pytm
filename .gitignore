@@ -126,3 +126,6 @@ plantuml.jar
 tm/
 /sqldump
 /tests/.config.pytm
+
+# avoid test output files
+tmp/
