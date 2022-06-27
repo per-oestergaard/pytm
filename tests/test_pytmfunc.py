@@ -36,6 +36,7 @@ with open(
     threats = {t["SID"]: Threat(**t) for t in json.load(threat_file)}
 
 output_path=tempfile.gettempdir()
+print("Output path is "+output_path)
 
 class TestTM(unittest.TestCase):
     def test_seq(self):
