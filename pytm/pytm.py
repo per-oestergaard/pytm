@@ -652,8 +652,8 @@ Can be one of:
 """,
     )
     cvss = varString("", required=False, doc="The CVSS score and/or vector")
-    uniqueId = varString(
-        "", doc="When order is present and includeOrder is true on the object, this will be formatted as findingId:order. E.g. if finding is INP01 and order is 123, the value becomes INP01:123.")
+    fixedUniqueID = varString(
+        "", doc="When fixedUniqueID is specified on the element , this will be formatted as findingId:fixedUniqueID. E.g. if finding is INP01 and fixedUniqueID is b123, the value becomes INP01:b123.")
 
     def __init__(
         self,
@@ -811,12 +811,12 @@ with same properties, except name and notes""",
                     continue
 
                 finding_count += 1
-                if e.includeOrder is True and e.order != -1:
-                    uniqueId="{}:{}".format(t.id,e.order)
+                if e.fixedUniqueID != "":
+                    fixedUniqueID="{}:{}".format(t.id,e.fixedUniqueID)
                 else:
-                    uniqueId=str(finding_count)
+                    fixedUniqueID=str(finding_count)
 
-                f = Finding(e, id=str(finding_count), threat=t, uniqueId=uniqueId)
+                f = Finding(e, id=str(finding_count), threat=t, fixedUniqueID=fixedUniqueID)
                 logger.debug(f"new finding: {f}")
                 findings.append(f)
                 elements[e].append(f)
@@ -1302,15 +1302,17 @@ a custom response, CVSS score or override other attributes.""",
         doc="Location of the source code that describes this element relative to the directory of the model script.",
     )
     controls = varControls(None)
-    includeOrder = varBool(
-        False, doc="If True and Order is set (not -1), the displayed name will be formatted as 'order:name'. If you make Order unique, this will give you a stable reference you can use for synchronization etc.")
-    order = varInt(-1, doc="Number of this element in the threat model")
+    fixedUniqueID = varString("",doc="If present, the element will get this assumably unique, static value and the combination of this ID and the finding ID will make up the unique fixed finding ID. When present, the displayed name be formatted as 'fixedUniqueID:name'. This will give you a stable reference you can use for synchronization with risk management systems etc. It is the responsibility of the person writing the model - the caller - to ensure uniqueness")
+    # includeOrder = varBool(
+    #     False, doc="If True and Order is set (not -1), the displayed name will be formatted as 'order:name'. If you make Order unique, this will give you a stable reference you can use for synchronization etc.")
+
+    # order = varInt(-1, doc="Number of this element in the threat model")
 
     def __init__(self, name, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
-        if self.includeOrder is True:
-            self.name = "{}:{}".format(self.order, name)
+        if self.fixedUniqueID != "":
+            self.name = "{}:{}".format(self.fixedUniqueID, name)
         else:
             self.name = name
         self.controls = Controls()
@@ -1730,7 +1732,7 @@ class Dataflow(Element):
     def display_name(self):
         if self.order == -1:
             return self.name
-        elif self.includeOrder is True: # order is already included in name
+        elif self.fixedUniqueID != "": # fixedUniqueID is already included in name
             return self.name
         else:
             return "({}) {}".format(self.order, self.name)
