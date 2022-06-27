@@ -1927,7 +1927,7 @@ def encode_threat_data(obj):
         "threat_id",
         "references",
         "condition",
-        "uniqueId"
+        "fixed_unique_id"
     ]
 
     if type(obj) is Finding or (len(obj) != 0 and type(obj[0]) is Finding):
