@@ -1637,9 +1637,14 @@ is any information relating to an identifiable person.""",
     color = {color};
     fontcolor = {color};
     xlabel = "{label}";
-    label = "";
+        label = <
+        <table border="0" cellborder="0" cellpadding="2">
+            <tr><td><b>{label}</b></td></tr>
+        </table>
+    >;
 ]
 """
+    # label = "";
 
     def _shape(self):
         return "rectangle; style=rounded"
