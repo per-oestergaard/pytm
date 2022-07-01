@@ -1660,7 +1660,7 @@ is any information relating to an identifiable person.""",
             uniq_name=self._uniq_name(),
             label=self._label(),
             color=self._color(),
-            shape=self._shape(),
+            shape=self._shape()
             # image=os.path.join("images", "datastore.png"), # make these relative
             # image=os.path.join(os.path.dirname(__file__), "images", "datastore.png"),
         )
