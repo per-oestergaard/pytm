@@ -1630,7 +1630,7 @@ is any information relating to an identifiable person.""",
 
     def _dfd_template(self):
         return """{uniq_name} [
-    shape = {shape};
+    shape = "box3d";
     fixedsize = shape;
     image = "{image}";
     imagescale = true;
