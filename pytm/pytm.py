@@ -1632,8 +1632,8 @@ is any information relating to an identifiable person.""",
         return """{uniq_name} [
     shape = "{shape}";
     fixedsize = shape;
-    image = "{image}";
-    imagescale = true;
+    // image = "{image}";
+    // imagescale = true;
     color = {color};
     fontcolor = {color};
     xlabel = "{label}";
