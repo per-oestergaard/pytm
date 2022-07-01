@@ -1638,7 +1638,7 @@ is any information relating to an identifiable person.""",
     fontcolor = {color};
     xlabel = "{label}";
         label = <
-        <table border="0" cellborder="0" cellpadding="2">
+        <table border="1" cellborder="0" cellpadding="2">
             <tr><td><b>{label}</b></td></tr>
         </table>
     >;
