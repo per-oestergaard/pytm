@@ -1630,7 +1630,7 @@ is any information relating to an identifiable person.""",
 
     def _dfd_template(self):
         return """{uniq_name} [
-    shape = "box3d";
+    shape = "{shape}";
     fixedsize = shape;
     image = "{image}";
     imagescale = true;
@@ -1647,7 +1647,7 @@ is any information relating to an identifiable person.""",
     # label = "";
 
     def _shape(self):
-        return "rectangle; style=rounded"
+        return "box3d"
 
     def dfd(self, **kwargs):
         self._is_drawn = True
@@ -1661,7 +1661,7 @@ is any information relating to an identifiable person.""",
             label=self._label(),
             color=self._color(),
             shape=self._shape(),
-            image=os.path.join("images", "datastore.png"), # make these relative
+            # image=os.path.join("images", "datastore.png"), # make these relative
             # image=os.path.join(os.path.dirname(__file__), "images", "datastore.png"),
         )
 
